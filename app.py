@@ -4,7 +4,6 @@ from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 app = Flask(__name__)
 
-# Пример документов для проверки на плагиат
 documents = [
     "This is a test document.",
     "This document is very similar to a test document.",
@@ -23,15 +22,12 @@ def check_plagiarism():
     plagiarism_percentage = max_similarity * 100
     return jsonify({'plagiarism': plagiarism_percentage})
 
-# Проверка на ИИ
 @app.route('/check_ai', methods=['POST'])
 def check_ai():
     input_text = request.json['text']
-    # Это просто пример, реальная проверка на ИИ может быть более сложной
-    ai_score = len(input_text) % 100  # Для демонстрации, здесь будет всегда разный результат
+    ai_score = len(input_text) % 100  
     return jsonify({'ai_score': ai_score})
 
-# Генерация текста с использованием GPT-2
 @app.route('/generate_text', methods=['POST'])
 def generate_text():
     prompt = request.json['prompt']
