@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import difflib
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
 app = Flask(__name__)
 
 # Пример документов для проверки на плагиат
