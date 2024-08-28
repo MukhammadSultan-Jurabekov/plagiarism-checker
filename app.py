@@ -23,3 +23,25 @@ def check_plagiarism():
     return jsonify({'plagiarism': plagiarism_percentage})
 
 # Проверка на ИИ
+@app.route('/check_ai', methods=['POST'])
+def check_ai():
+    input_text = request.json['text']
+    # Это просто пример, реальная проверка на ИИ может быть более сложной
+    ai_score = len(input_text) % 100  # Для демонстрации, здесь будет всегда разный результат
+    return jsonify({'ai_score': ai_score})
+
+# Генерация текста с использованием GPT-2
+@app.route('/generate_text', methods=['POST'])
+def generate_text():
+    prompt = request.json['prompt']
+    model = GPT2LMHeadModel.from_pretrained('gpt2')
+    tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+
+    inputs = tokenizer.encode(prompt, return_tensors='pt')
+    outputs = model.generate(inputs, max_length=150, num_return_sequences=1)
+
+    generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    return jsonify({'generated_text': generated_text})
+
+if __name__ == '__main__':
+    app.run(debug=True)
